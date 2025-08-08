@@ -12,7 +12,8 @@ rooms = {}  # room_id: room_data
 #   "players": {player_name: {"is_bhadwa": bool, "voted_today": bool}},
 #   "bhadwa": player_name,
 #   "votes": {player_name: vote_count},
-#   "game_active": True
+#   "game_active": True,
+#   "result": None
 # }
 
 VOTING_PERIOD_SECONDS = 24 * 60 * 60  # 1 day voting period
@@ -42,6 +43,12 @@ def end_voting(room_id):
         room["result"] = f"Bhadwa {eliminated} was eliminated. Innocents win!"
     else:
         room["result"] = f"{eliminated} was eliminated. Bhadwa wins."
+
+
+@app.route("/")
+def index():
+    return "Welcome to the Bhadwa Game API! Use /create_room, /vote, /status endpoints."
+
 
 @app.route("/create_room", methods=["POST"])
 def create_room():
